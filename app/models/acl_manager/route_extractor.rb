@@ -6,9 +6,7 @@ module AclManager
 
     def initialize
       all_routes = Rails.application.routes.routes
-
-      puts all_routes.map(&:name)
-      inspector = ActionDispatch::Routing::RoutesInspector.new(all_routes)
+      inspector = RoutesInspector.new(all_routes)
       @all = inspector.format(ArrayFormatter.new)
     end
 
@@ -19,9 +17,25 @@ module AclManager
       {namespace: path.first, controller: path.last, action: route[:action]}
     end
 
+    private
+
+    class RoutesInspector < ActionDispatch::Routing::RoutesInspector
+      def collect_routes(routes)
+        routes.collect do |route|
+          ActionDispatch::Routing::RouteWrapper.new(route)
+        end.reject(&:internal?).collect do |route|
+
+          { name: route.name,
+            verb: route.verb,
+            path: route.path,
+            reqs: route.reqs }
+        end
+      end
+    end
+
     class ArrayFormatter < ActionDispatch::Routing::ConsoleFormatter
       def result
-        a = {routes: @routes, namespaces: @namespaces.uniq, controllers: @controllers.uniq}
+        {routes: @routes, namespaces: @namespaces.uniq, controllers: @controllers.uniq}
       end
 
       def section(list)

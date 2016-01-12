@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :quens
+  namespace "gil" do
+
+    resources :quens
+
+  end
 
 
   mount AclManager::Engine => "/acl_manager"
