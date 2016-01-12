@@ -1,0 +1,57 @@
+<%= form_for(@acl) do |f| %>
+  <% if @acl.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@acl.errors.count, "error") %> prohibited this acl from being saved:</h2>
+
+      <ul>
+      <% @acl.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :namespace %><br>
+    <%= f.text_field :namespace %>
+  </div>
+  <div class="field">
+    <%= f.label :controller %><br>
+    <%= f.text_field :controller %>
+  </div>
+  <div class="field">
+    <%= f.label :action %><br>
+    <%= f.text_field :action %>
+  </div>
+  <div class="field">
+    <%= f.label :verb %><br>
+    <%= f.text_field :verb %>
+  </div>
+  <div class="field">
+    <%= f.label :helper %><br>
+    <%= f.text_field :helper %>
+  </div>
+  <div class="field">
+    <%= f.label :path %><br>
+    <%= f.text_field :path %>
+  </div>
+  <div class="field">
+    <%= f.label :parent_id %><br>
+    <%= f.number_field :parent_id %>
+  </div>
+  <div class="field">
+    <%= f.label :lft %><br>
+    <%= f.number_field :lft %>
+  </div>
+  <div class="field">
+    <%= f.label :rgt %><br>
+    <%= f.number_field :rgt %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

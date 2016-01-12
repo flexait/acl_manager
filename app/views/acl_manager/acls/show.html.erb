@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @acl.name %>
+</p>
+
+<p>
+  <strong>Namespace:</strong>
+  <%= @acl.namespace %>
+</p>
+
+<p>
+  <strong>Controller:</strong>
+  <%= @acl.controller %>
+</p>
+
+<p>
+  <strong>Action:</strong>
+  <%= @acl.action %>
+</p>
+
+<p>
+  <strong>Verb:</strong>
+  <%= @acl.verb %>
+</p>
+
+<p>
+  <strong>Helper:</strong>
+  <%= @acl.helper %>
+</p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @acl.path %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @acl.parent_id %>
+</p>
+
+<p>
+  <strong>Lft:</strong>
+  <%= @acl.lft %>
+</p>
+
+<p>
+  <strong>Rgt:</strong>
+  <%= @acl.rgt %>
+</p>
+
+<%= link_to 'Edit', edit_acl_path(@acl) %> |
+<%= link_to 'Back', acls_path %>

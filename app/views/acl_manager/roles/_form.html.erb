@@ -1,0 +1,45 @@
+
+<%= form_for @role, :html => { :class => "form-horizontal role" } do |f| %>
+
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="checkbox">
+      <%= f.label :active, :class => 'control-label' do %>
+        <%= f.check_box :active, :class => 'checkbox' %> 
+        Active
+      <% end %>
+    </div>
+  </div>
+
+  <div class="links">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Permissions</h3>
+      </div>
+      <div class="panel-body">
+        <%= f.label :acls %>
+        <% @acls.try(:each) do |acl| -%> 
+          <div class="node node-level<%= acl.level %>">
+            <%= check_box_tag('role[acl_ids][]', acl.id, @role.included?(acl)) %>
+            <%= acl.name %>
+          </div>
+        <% end -%>
+    </div>
+
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+              roles_path, :class => 'btn btn-default' %>
+  </div>
+<% end %>
