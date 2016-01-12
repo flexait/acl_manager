@@ -15,6 +15,11 @@ module AclManager
       def permit!
         acl = find_acl
         return true if acl.nil?
+        @controller.instance_eval do
+          def current_user
+            User.first
+          end
+        end
         @controller.current_user.permit!(acl)
       end
 
@@ -27,7 +32,9 @@ module AclManager
       end
 
       def namespace
-        @controller.controller_path.split('/').first
+        path = @controller.controller_path
+        return 'none' unless path.include?('/')
+        path.split('/').first
       end
     end
   end
