@@ -10,6 +10,7 @@ module AclManager
 		base.include InstanceMethods
 	end
 
+
 	module ClassMethods
 		def acl_manager
 			ancestors.first.class_eval do
