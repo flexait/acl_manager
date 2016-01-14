@@ -20,7 +20,7 @@ module AclManager
 
     test "should create acl" do
       assert_difference('Acl.count') do
-        post :create, acl: { action: @acl.action, controller: @acl.controller, helper: @acl.helper, lft: @acl.lft, name: @acl.name, namespace: @acl.namespace, parent_id: @acl.parent_id, path: @acl.path, rgt: @acl.rgt, verb: @acl.verb }
+        post :create, acl: { action: @acl.action, controller: @acl.controller, helper: @acl.helper, name: @acl.name, namespace: @acl.namespace, parent_id: @acl.parent_id, path: @acl.path, verb: @acl.verb }
       end
 
       assert_redirected_to acl_path(assigns(:acl))
@@ -37,7 +37,7 @@ module AclManager
     end
 
     test "should update acl" do
-      patch :update, id: @acl, acl: { action: @acl.action, controller: @acl.controller, helper: @acl.helper, lft: @acl.lft, name: @acl.name, namespace: @acl.namespace, parent_id: @acl.parent_id, path: @acl.path, rgt: @acl.rgt, verb: @acl.verb }
+      patch :update, id: @acl, acl: { action: @acl.action, controller: @acl.controller, helper: @acl.helper, name: @acl.name, namespace: @acl.namespace, parent_id: @acl.parent_id, path: @acl.path, verb: @acl.verb }
       assert_redirected_to acl_path(assigns(:acl))
     end
 

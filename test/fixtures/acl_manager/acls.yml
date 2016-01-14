@@ -9,8 +9,6 @@ one:
   helper: MyString
   path: MyString
   parent_id: 1
-  lft: 1
-  rgt: 1
 
 two:
   name: MyString
@@ -21,5 +19,3 @@ two:
   helper: MyString
   path: MyString
   parent_id: 1
-  lft: 1
-  rgt: 1
