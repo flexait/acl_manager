@@ -5,7 +5,9 @@ module AclManager
 	autoload :InstanceMethods, 'acl_manager/acls/instance_methods'
 
   def self.included(base)
-		base.extend ClassMethods
-		base.include InstanceMethods
+  	base.class_eval do
+			extend ClassMethods
+			include InstanceMethods
+		end
 	end	
 end
