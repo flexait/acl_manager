@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     acl_manager (0.0.1)
+      awesome_nested_set
       rails (~> 4.2.5)
 
 GEM
@@ -107,7 +108,6 @@ PLATFORMS
 
 DEPENDENCIES
   acl_manager!
-  awesome_nested_set
   sqlite3
 
 BUNDLED WITH
