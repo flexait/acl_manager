@@ -24,6 +24,7 @@ module AclManager
       end
 
       def find_acl
+        puts find_route
         AclManager::Acl.find_by(find_route)
       end
 
