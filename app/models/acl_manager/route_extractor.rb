@@ -13,7 +13,7 @@ module AclManager
     def self.recognize_fullpath url_path, options
       raise 'Bad link_to usage. You don\'t need href with no URL. Remove it.' if url_path.include?('javascript:')
       route = Rails.application.routes.recognize_path(url_path, options)
-      path = route[:controller].split('/')
+      path = route[:controller].include?('/') ? route[:controller].split('/') : ['none', route[:controller]]
       {namespace: path.first, controller: path.last, action: route[:action]}
     end
 
@@ -29,6 +29,17 @@ module AclManager
             verb: route.verb,
             path: route.path,
             reqs: route.reqs }
+        end
+      end
+
+      def collect_engine_routes(route)
+        name = route.endpoint
+        return unless route.engine?
+        return if @engines[name]
+
+        routes = route.rack_app.routes
+        if routes.is_a?(ActionDispatch::Routing::RouteSet)
+          @engines[name] = collect_routes(routes.routes)
         end
       end
     end

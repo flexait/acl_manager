@@ -3,14 +3,17 @@ module AclManager
   	include ActionView::Helpers::UrlHelper
 
 	  def link_to(*args, &block)
-	    @last_param = args.last
-	    if block_given?
-	      options = args.first || {}
-	      return default_name(args, capture(&block)) unless permit!(options)
-	    else
-	      options = args[1] || {}
-	      return default_name(args, args.first) unless permit!(options)
-	    end
+	  	begin
+		    @last_param = args.last
+		    if block_given?
+		      options = args.first || {}
+		      return default_name(args, capture(&block)) unless permit!(options)
+		    else
+		      options = args[1] || {}
+		      return default_name(args, args.first) unless permit!(options)
+		    end
+		  rescue 
+		  end
 
 	    super
 	  end
@@ -37,6 +40,7 @@ module AclManager
 	  end
 	  
 	  def find_acl
+	  	puts find_route
 	    AclManager::Acl.find_by(find_route)
 	  end
 
@@ -44,7 +48,7 @@ module AclManager
 	    method = {}
 	    method = @last_param if @last_param.is_a?(Hash) && !@last_param[:method].nil?
 	    url_path = "#{request.protocol}#{request.host}:#{request.port}#{url_for(@options)}"
-	    AclManager::RouteExtractor.recognize_fullpath(url_path, method) 
+	    AclManager::RouteExtractor.recognize_fullpath(url_path, method)
 	  end
   end
 end
