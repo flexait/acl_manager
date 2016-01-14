@@ -6,7 +6,7 @@ module AclManager
 
     def initialize
       all_routes = Rails.application.routes.routes
-      inspector = RoutesInspector.new(all_routes)
+      inspector = ActionDispatch::Routing::RoutesInspector.new(all_routes)
       @all = inspector.format(ArrayFormatter.new)
     end
 
@@ -19,44 +19,24 @@ module AclManager
 
     private
 
-    class RoutesInspector < ActionDispatch::Routing::RoutesInspector
-      def collect_routes(routes)
-        routes.collect do |route|
-          ActionDispatch::Routing::RouteWrapper.new(route)
-        end.reject(&:internal?).collect do |route|
-
-          { name: route.name,
-            verb: route.verb,
-            path: route.path,
-            reqs: route.reqs }
-        end
-      end
-
-      def collect_engine_routes(route)
-        name = route.endpoint
-        return unless route.engine?
-        return if @engines[name]
-
-        routes = route.rack_app.routes
-        if routes.is_a?(ActionDispatch::Routing::RouteSet)
-          @engines[name] = collect_routes(routes.routes)
-        end
-      end
-    end
-
     class ArrayFormatter < ActionDispatch::Routing::ConsoleFormatter
+      def initialize
+        super
+        @routes = []
+        @namespaces = []
+        @controllers = []
+      end
+
       def result
         {routes: @routes, namespaces: @namespaces.uniq, controllers: @controllers.uniq}
       end
 
       def section(list)
-        @namespaces = []
-        @controllers = []
-        @routes = list.map do |route|
+        list.each do |route|
           reqs = extract(route[:reqs])
           @namespaces << reqs[:namespace]
           @controllers << {namespace: reqs[:namespace], controller: reqs[:controller]}
-          normalize(route, reqs)
+          @routes << normalize(route, reqs)
         end
       end
 
@@ -71,7 +51,7 @@ module AclManager
       end
 
       def extract(reqs)
-        return {namespace: reqs} if reqs.include? "::"
+        return {namespace: reqs} if reqs.include?("::")
         regex = /(?:(?<namespace>.*)\/)?(?<controller>.+)\#(?<action>[^\s]*)(.+)?/.match(reqs)
         {namespace: regex[:namespace] || 'none', controller: regex[:controller], action: regex[:action]}
       end
