@@ -1,6 +1,10 @@
 require "acl_manager/engine"
 
 module AclManager
+  autoload :Builder, 'acl_manager/builder'
+  autoload :Filter, 'acl_manager/filter'
+  autoload :RouteExtractor, 'acl_manager/route_extractor'
+
   def self.included(base)
   	base.extend ClassMethods
 		base.include InstanceMethods
