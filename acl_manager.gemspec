@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.5"
   s.add_dependency "awesome_nested_set"
+  s.add_dependency "devise"
   s.add_development_dependency "sqlite3"
 end
