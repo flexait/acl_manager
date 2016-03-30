@@ -15,6 +15,14 @@ module AclManager
     initializer :load_config_initializers do |app|
       ActiveRecord::Base.send(:include, AclManager)
     end
+
+    ActiveSupport.on_load(:action_controller) do
+      Devise.mappings.keys.each do |resource_name|
+        define_method "authorizate_#{resource_name}!" do
+          self.send("authenticate_#{resource_name}!")
+          AclManager::Filter.before(self)
+        end
+      end
+    end
   end
 end
-
