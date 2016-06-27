@@ -1,7 +1,7 @@
 module AclManager
   require 'action_dispatch/routing/inspector'
-  
-  class RouteExtractor    
+
+  class RouteExtractor
     attr_reader :all
 
     def initialize
@@ -65,20 +65,20 @@ module AclManager
 
       def self.find(path, options)
         begin
-          recognized_path = Rails.application.routes.recognize_path(path, options)
+          path.match(/.*\/(.*)\/(.*)\/(.*)/)
+          sub_path = "#{$1}/#{$2}/#{$3}"
+
+          recognized_path = Rails.application.routes.recognize_path(sub_path, options)
         rescue ActionController::RoutingError
           Rails::Engine.subclasses.each do |engine|
-            engine_instance = engine.instance
-            engine_class = engine_instance.class
-
-            route = all.find do |r|
-              r[:namespace] == engine.name
-            end
-
+            engine_name = engine.name.split("::").first.underscore
+            route = all.find{ |r| r[:namespace] == engine_name }
+            next if route.nil?
             engine_path = path.gsub(route[:path], '')
 
             begin
-              recognized_path = engine_instance.routes.recognize_path(engine_path, options)
+              engine_path.match(/#{engine_name}\/(.*)/)
+              recognized_path = engine.routes.recognize_path($1, options)
             rescue ActionController::RoutingError => e
               Rails.logger.debug "[#{engine}] ActionController::RoutingError: #{e.message}"
             end
