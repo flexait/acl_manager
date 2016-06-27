@@ -20,11 +20,12 @@
   user.roles << role
   ```
 6. Add Acl Manager filter to your controllers
+  
   ```
-    class ApplicationController < ActionController::Base
-      before_filter AclManager::Filter
-      ...
-    end
+  class ApplicationController < ActionController::Base
+    before_filter AclManager::Filter
+    ...
+  end
   ```
 
 ## License
