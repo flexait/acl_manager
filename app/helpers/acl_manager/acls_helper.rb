@@ -28,14 +28,14 @@ module AclManager
 	  end
 
 	  def default_name(args, name)
-	    args.last.is_a?(Hash) && args.last[:show_name] ? 
+	    args.last.is_a?(Hash) && args.last[:show_name] ?
 	      content_tag(:a, name, args.last.reject { |key, value| key == :show_name }) : ''
 	  end
 
 	  def black_listed?
 	    @last_param.is_a?(Hash) && @last_param[:no_acl]
 	  end
-	  
+
 	  def find_acl
 	    AclManager::Acl.find_by(find_route)
 	  end

@@ -1,30 +1,24 @@
 module AclManager
   class Filter
     class << self
-      def before(controller)
+      def before(controller, resource)
         @controller = controller
+        @resource = resource
         block_access! unless permit!
       end
 
       private
-      
+
       def block_access!
         @controller.render :file => 'public/401.html', :status => :unauthorized
       end
 
       def permit!
         acl = find_acl
-        return true if acl.nil?
-        @controller.instance_eval do
-          def current_user
-            User.first
-          end
-        end
-        @controller.current_user.permit!(acl)
+        acl.nil? || @resource.permit!(acl)
       end
 
       def find_acl
-        puts find_route
         AclManager::Acl.find_by(find_route)
       end
 

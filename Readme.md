@@ -20,10 +20,10 @@
   user.roles << role
   ```
 6. Add Acl Manager filter to your controllers
-  
+
   ```
   class ApplicationController < ActionController::Base
-    before_filter AclManager::Filter
+    before_filter :authenticate_user!, :authorizate_user!
     ...
   end
   ```
