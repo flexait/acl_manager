@@ -13,6 +13,8 @@ module AclManager
     initializer :load_config_initializers do |app|
       ActiveRecord::Base.send(:include, AclManager)
       Rails.application.config.assets.paths << root.join("app", "assets", "images", "acl_manager")
+      Rails.application.config.assets.paths << root.join("app", "assets", "stylesheets", "acl_manager")
+      Rails.application.config.assets.paths << root.join("app", "assets", "javascripts", "acl_manager")
       Rails.application.config.assets.precompile += %w( acl_manager/true.png )
       Rails.application.config.assets.precompile += %w( acl_manager/false.png )
       Rails.application.config.assets.precompile += %w( acl_manager/vline.png )
