@@ -6,7 +6,7 @@ module AclManager
     before_action :set_acls, only: [:new, :edit]
     # GET /roles
     def index
-      @roles = Role.all
+      @roles = Role.unscoped.all
     end
 
     # GET /roles/1
@@ -26,7 +26,7 @@ module AclManager
     def create
       @role = Role.new(role_params)
 
-      if @role.save
+      if @Role.unscoped.save
         redirect_to @role, notice: 'Role was successfully created.'
       else
         render :new
@@ -44,7 +44,7 @@ module AclManager
 
     # DELETE /roles/1
     def destroy
-      @role.destroy
+      @Role.destroy
       redirect_to roles_url, notice: 'Role was successfully destroyed.'
     end
 
@@ -57,7 +57,7 @@ module AclManager
 
       # Use callbacks to share common setup or constraints between actions.
       def set_role
-        @role = Role.find(params[:id])
+        @role = Role.unscoped.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

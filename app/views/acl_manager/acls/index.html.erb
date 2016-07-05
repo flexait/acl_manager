@@ -1,54 +1,32 @@
-<%- model_class = AclManager::Acl -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:parent_id) %></th>
-      <th><%= model_class.human_attribute_name(:namespace) %></th>
-      <th><%= model_class.human_attribute_name(:controller) %></th>
-      <th><%= model_class.human_attribute_name(:action) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:verb) %></th>
-      <th><%= model_class.human_attribute_name(:path) %></th>
-      <th><%= model_class.human_attribute_name(:helper) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.action") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @acls.each do |acl| %>
+<div class="posts">
+  <h1 class="content-subhead">
+    Acls ::
+    <%= link_to 'New Acl', new_acl_path %> ::
+    <%= link_to 'Build All', build_all_acls_path %>
+  </h1>
+
+  <table class="pure-table pure-table pure-table-bordered">
+    <thead>
       <tr>
-        <td><%= link_to acl.id, acl_path(acl) %></td>
-        <td><%= acl.parent_id %></td>
-        <td><%= acl.namespace %></td>
-        <td><%= acl.controller %></td>
-        <td><%= acl.action %></td>
-        <td><%= acl.name %></td>
-        <td><%= acl.verb %></td>
-        <td><%= acl.path %></td>
-        <td><%= acl.helper %></td>
-        <td><%= acl.created_at %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_acl_path(acl), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      acl_path(acl),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-        </td>
+        <th>id</th>
+        <th>parent_id</th>
+        <th>namespace</th>
+        <th>name</th>
+        <th>path</th>
+        <th>helper</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_acl_path,
-            :class => 'btn btn-primary' %>
-
-<%= link_to 'Build All',
-            build_all_acls_path,
-            :class => 'btn btn-primary' %>
+    </thead>
+    <tbody>
+      <% @acls.each do |acl| %>
+        <tr>
+          <td><%= acl.id %></td>
+          <td><%= acl.parent_id %></td>
+          <td><%= acl.namespace %></td>
+          <td><%= acl.name %></td>
+          <td><%= acl.verb %> <%= acl.path %></td>
+          <td><%= acl.helper %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

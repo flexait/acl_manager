@@ -1,45 +1,32 @@
-
-<%= form_for @role, :html => { :class => "form-horizontal role" } do |f| %>
-
-
-  <div class="control-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name, :class => 'form-control' %>
+<%= form_for @role, :html => { :class => "pure-form pure-form-aligned" } do |f| %>
+  <fieldset>
+    <div class="pure-control-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true %>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :description, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :description, :class => 'form-control' %>
+    <div class="pure-control-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: 5, cols: 60 %>
     </div>
-  </div>
-  <div class="control-group">
-    <div class="checkbox">
-      <%= f.label :active, :class => 'control-label' do %>
-        <%= f.check_box :active, :class => 'checkbox' %> 
+    <div class="pure-controls">
+      <%= f.label :active, class: 'pure-checkbox' do %>
+        <%= f.check_box :active %>
         Active
       <% end %>
     </div>
-  </div>
 
-  <div class="links">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Permissions</h3>
-      </div>
-      <div class="panel-body">
-        <%= f.label :acls %>
-        <% @acls.try(:each) do |acl| -%> 
-          <div class="node node-level<%= acl.level %>">
-            <%= check_box_tag('role[acl_ids][]', acl.id, @role.included?(acl)) %>
-            <%= acl.name %>
-          </div>
-        <% end -%>
+    <h3 class="panel-title">Permissions</h3>
+
+    <div id="acl-tree">
+      <%= nested_li(@acls) do |acl| %>
+        <label class="pure-checkbox">
+          <%= check_box_tag('role[acl_ids][]', acl.id, @role.included?(acl)) %>
+          <%= acl.name %>
+        </label>
+      <% end %>
     </div>
 
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-              roles_path, :class => 'btn btn-default' %>
-  </div>
+    <%= f.submit nil, class: 'pure-button pure-button-primary' %>
+    <%= link_to 'Cancel', roles_path, class: 'button-error pure-button' %>
+  </fieldset>
 <% end %>

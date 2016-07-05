@@ -1,6 +1,10 @@
-<h1>Editing Role</h1>
+<div class="posts">
+  <h1 class="content-subhead"><%= @role.name %></h1>
 
-<%= render 'form' %>
+  <h2>Editing Role</h2>
 
-<%= link_to 'Show', @role %> |
-<%= link_to 'Back', roles_path %>
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @role %> |
+  <%= link_to 'Back', roles_path %>
+</div>

@@ -1,29 +1,23 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Listing Roles</h1>
+<div class="posts">
+<h1 class="content-subhead">Roles</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Active</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% @roles.each do |role| %>
+  <section class="post">
+    <header class="post-header">
+      <%= image_tag "#{role.active}.png", class: 'post-avatar', height: '48', width: '48' %>
 
-  <tbody>
-    <% @roles.each do |role| %>
-      <tr>
-        <td><%= role.name %></td>
-        <td><%= role.active %></td>
-        <td><%= link_to 'Show', role %></td>
-        <td><%= link_to 'Edit', edit_role_path(role) %></td>
-        <td><%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <h2 class="post-title"><%= role.name %></h2>
+      <p class="post-meta">
+        <%= link_to 'Edit role', acl_manager.edit_role_path(role) %> :: active? <a class="post-category post-category-design" href="#"><%= role.active? %></a>
+      </p>
+    </header>
 
-<br>
+    <div class="post-description">
+      <p><%= role.description %></p>
+    </div>
+  </section>
+<% end %>
+</div>
 
-<%= link_to 'New Role', new_role_path %>
+<%= link_to 'Add new role', acl_manager.new_role_path, class: 'pure-button' %>
