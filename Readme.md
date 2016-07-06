@@ -27,6 +27,9 @@
     ...
   end
   ```
+## Usage
+
+![Acl Manager Print Screen](https://raw.githubusercontent.com/flexait/acl_manager/master/acl_manager.png)
 
 ## License
 This project rocks and uses MIT-LICENSE.
