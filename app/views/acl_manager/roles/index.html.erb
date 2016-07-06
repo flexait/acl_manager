@@ -5,11 +5,11 @@
 <% @roles.each do |role| %>
   <section class="post">
     <header class="post-header">
-      <%= image_tag "#{role.active}.png", class: 'post-avatar', height: '48', width: '48' %>
+      <%= image_tag "acl_manager/#{role.active}.png", class: 'post-avatar', height: '48', width: '48' %>
 
       <h2 class="post-title"><%= role.name %></h2>
       <p class="post-meta">
-        <%= link_to 'Edit role', acl_manager.edit_role_path(role) %> :: active? <a class="post-category post-category-design" href="#"><%= role.active? %></a>
+        <%= link_to 'Edit role', acl_manager.edit_role_path(role) %> :: active? <a class="post-category <%= role.active %>" href="#"><%= role.active? %></a>
       </p>
     </header>
 
