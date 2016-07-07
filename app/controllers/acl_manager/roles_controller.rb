@@ -26,7 +26,7 @@ module AclManager
     def create
       @role = Role.new(role_params)
 
-      if @Role.unscoped.save
+      if @role.save
         redirect_to @role, notice: 'Role was successfully created.'
       else
         render :new
