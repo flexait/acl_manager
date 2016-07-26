@@ -6,7 +6,7 @@
 1. Install the acl_manager gem: `gem install 'acl_manager'` or put it inside your Gemfile: `gem 'acl_manager'`
 2. Add the acl_manager module into devise inside your model: `devise :database_authenticatable, :registerable, ..., :acl_manager`
 
-3. Install the migrations. run:  `rake db:migrate`
+3. Install the migrations. run:  `rails g acl_manager MODEL`
 
 4. Open up your console and build the acls
     `AclManager::Acl.build_all!`

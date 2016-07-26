@@ -1,3 +1,4 @@
+require 'rails'
 require "acl_manager/engine"
 require "acl_manager/builder"
 require "acl_manager/filter"

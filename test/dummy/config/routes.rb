@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :users
-  mount AclManager::Engine => "/acl_manager"
 end
