@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726144542) do
+ActiveRecord::Schema.define(version: 20160726144808) do
 
   create_table "acl_manager_acls", force: :cascade do |t|
     t.string   "name"
