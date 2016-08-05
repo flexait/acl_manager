@@ -27,7 +27,7 @@ module AclManager
 
         def authorizate_resource(resource_name)
           define_singleton_method "authorizate_#{resource_name}!" do
-            resource = request.env["warden"].user
+            resource = request.env["warden"].user(resource_name)
             AclManager::Filter.before(self, resource) if resource
           end
         end
