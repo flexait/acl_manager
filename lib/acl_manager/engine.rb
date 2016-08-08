@@ -13,23 +13,24 @@ module AclManager
       Rails.application.config.assets.precompile += %w( acl_manager/false.png )
       Rails.application.config.assets.precompile += %w( acl_manager/vline.png )
 
-    end
-
-    ActiveSupport.on_load(:action_controller) do
-      class_eval do
-        def method_missing(m, *args, &block)
-          if m.match /authorizate_(.*)!/
-            send authorizate_resource($1)
-          else
-            super
+      ActiveSupport.on_load(:action_controller) do
+        class_eval do
+          def method_missing(m, *args, &block)
+            if m.match /authorizate_(.*)!/
+              send authorizate_resource($1)
+            else
+              super
+            end
           end
-        end
 
-        def authorizate_resource(resource_name)
-          define_singleton_method "authorizate_#{resource_name}!" do
-            resource = request.env["warden"].user(resource_name)
-            AclManager::Filter.before(self, resource) if resource
+          def authorizate_resource(resource_name)
+            define_singleton_method "authorizate_#{resource_name}!" do
+              resource = request.env["warden"].user(resource_name)
+              AclManager::Filter.before(self, resource) if resource
+            end
           end
+
+          helper AclManager::AclsHelper
         end
       end
     end
