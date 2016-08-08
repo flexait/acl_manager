@@ -14,5 +14,9 @@ module AclManager
     def included? acl
       self.acl_ids.include?(acl.id)
     end
+
+    def t_name
+      I18n.t("activerecord.attributes.role.name_#{self.name}", default: self.name)
+    end
   end
 end

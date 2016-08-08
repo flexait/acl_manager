@@ -31,5 +31,17 @@
 
 ![Acl Manager Print Screen](https://raw.githubusercontent.com/flexait/acl_manager/master/acl-manager.png)
 
+### Create a role list to user form
+```
+= f.collection_check_boxes :role_ids, AclManager::Role.all, :id, :name do |ff|
+  = f.label
+  = f.check_box
+```
+
+### Translate role name
+```
+activerecord.attributes.acl_manager.role.#{role_name}
+```
+
 ## License
 This project rocks and uses MIT-LICENSE.
