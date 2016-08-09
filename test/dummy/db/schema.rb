@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -31,10 +30,9 @@ ActiveRecord::Schema.define(version: 20160726144808) do
   create_table "acl_manager_acls_roles", force: :cascade do |t|
     t.integer "acl_manager_acl_id"
     t.integer "acl_manager_role_id"
+    t.index ["acl_manager_acl_id"], name: "index_acl_manager_acls_roles_on_acl_manager_acl_id"
+    t.index ["acl_manager_role_id"], name: "index_acl_manager_acls_roles_on_acl_manager_role_id"
   end
-
-  add_index "acl_manager_acls_roles", ["acl_manager_acl_id"], name: "index_acl_manager_acls_roles_on_acl_manager_acl_id"
-  add_index "acl_manager_acls_roles", ["acl_manager_role_id"], name: "index_acl_manager_acls_roles_on_acl_manager_role_id"
 
   create_table "acl_manager_roles", force: :cascade do |t|
     t.string   "name"
@@ -49,10 +47,9 @@ ActiveRecord::Schema.define(version: 20160726144808) do
     t.integer  "acl_manager_role_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["acl_manager_role_id"], name: "index_acl_manager_roles_users_on_acl_manager_role_id"
+    t.index ["user_id"], name: "index_acl_manager_roles_users_on_user_id"
   end
-
-  add_index "acl_manager_roles_users", ["acl_manager_role_id"], name: "index_acl_manager_roles_users_on_acl_manager_role_id"
-  add_index "acl_manager_roles_users", ["user_id"], name: "index_acl_manager_roles_users_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -68,9 +65,8 @@ ActiveRecord::Schema.define(version: 20160726144808) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
