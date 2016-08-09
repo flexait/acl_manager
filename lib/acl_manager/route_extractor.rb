@@ -66,29 +66,29 @@ module AclManager
       def self.find(path, options)
         begin
           recognized_path = Rails.application.routes.recognize_path(path, options)
+        rescue ActionController::RoutingError
+          begin
+            path.match(/.*\/(.*)\/(.*)\/(.*)/)
+            sub_path = "#{$1}/#{$2}/#{$3}"
+
+            recognized_path = Rails.application.routes.recognize_path(sub_path, options)
           rescue ActionController::RoutingError
-            begin
-              path.match(/.*\/(.*)\/(.*)\/(.*)/)
-              sub_path = "#{$1}/#{$2}/#{$3}"
+            Rails::Engine.subclasses.each do |engine|
+              engine_name = engine.name.split("::").first.underscore
+              route = all.find{ |r| r[:namespace] == engine_name }
+              next if route.nil?
+              engine_path = path.gsub(route[:path], '')
 
-              recognized_path = Rails.application.routes.recognize_path(sub_path, options)
-            rescue ActionController::RoutingError
-              Rails::Engine.subclasses.each do |engine|
-                engine_name = engine.name.split("::").first.underscore
-                route = all.find{ |r| r[:namespace] == engine_name }
-                next if route.nil?
-                engine_path = path.gsub(route[:path], '')
-
-                begin
-                  engine_path.match(/#{engine_name}\/(.*)/)
-                  recognized_path = engine.routes.recognize_path($1, options)
-                rescue ActionController::RoutingError => e
-                  Rails.logger.debug "[#{engine}] ActionController::RoutingError: #{e.message}"
-                end
+              begin
+                engine_path.match(/#{engine_name}\/(.*)/)
+                recognized_path = engine.routes.recognize_path($1, options)
+              rescue ActionController::RoutingError => e
+                Rails.logger.debug "[#{engine}] ActionController::RoutingError: #{e.message}"
               end
             end
           end
-          recognized_path
+        end
+        recognized_path
       end
 
       def self.all

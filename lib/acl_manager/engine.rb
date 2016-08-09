@@ -16,7 +16,7 @@ module AclManager
       ActiveSupport.on_load(:action_controller) do
         class_eval do
           def method_missing(m, *args, &block)
-            if m.match /authorizate_(.*)!/
+            if m.match(/authorizate_(.*)!/)
               send authorizate_resource($1)
             else
               super
