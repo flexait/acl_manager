@@ -1,11 +1,8 @@
 class AclManagerRolesUsers < ActiveRecord::Migration
   def change
-    create_table :acl_manager_roles_users do |t|
-      t.references :user, index: true
-      t.references :acl_manager_role, index: true
+    create_join_table :acl_manager_roles, :users do |t|
+      t.index [:acl_manager_role_id, :user_id]
+      t.index [:user_id, :acl_manager_role_id]
     end
-
-    add_foreign_key :acl_manager_roles_users, :users
-    add_foreign_key :acl_manager_roles_users, :acl_manager_roles
   end
 end
