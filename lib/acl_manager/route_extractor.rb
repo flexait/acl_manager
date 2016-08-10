@@ -92,6 +92,7 @@ module AclManager
             end
           end
         end
+        Rails.logger.debug "[Route Extractor] Route found: #{recognized_path}"
         recognized_path
       end
 
