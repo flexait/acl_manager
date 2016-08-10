@@ -65,25 +65,29 @@ module AclManager
 
       def self.find(path, options)
         begin
+          Rails.logger.debug "[Route Extractor] Start #{path}"
           recognized_path = Rails.application.routes.recognize_path(path, options)
         rescue ActionController::RoutingError
           begin
-            path.match(/.*\/(.*)\/(.*)\/(.*)/)
-            sub_path = "#{$1}/#{$2}/#{$3}"
+            path.match(/(?:http[s]?:\/\/)?(?:[^\/\s]+)(\/.*)/)
+            Rails.logger.debug "[Route Extractor] Try again #{$1}"
 
-            recognized_path = Rails.application.routes.recognize_path(sub_path, options)
+            recognized_path = Rails.application.routes.recognize_path($1, options)
           rescue ActionController::RoutingError
             Rails::Engine.subclasses.each do |engine|
-              engine_name = engine.name.split("::").first.underscore
-              route = all.find{ |r| r[:namespace] == engine_name }
-              next if route.nil?
-              engine_path = path.gsub(route[:path], '')
-
               begin
-                engine_path.match(/#{engine_name}\/(.*)/)
+                engine_name = engine.name.split("::").first.underscore
+                Rails.logger.debug "[Route Extractor] Try for engine #{engine_name}"
+
+                route = all.find{ |r| r[:namespace] == engine_name }
+                next if route.nil?
+                engine_path = path.gsub(route[:path], '')
+
+                engine_path.match(/#{engine_name}(\/.*)/)
                 recognized_path = engine.routes.recognize_path($1, options)
               rescue ActionController::RoutingError => e
-                Rails.logger.debug "[#{engine}] ActionController::RoutingError: #{e.message}"
+                Rails.logger.debug "[Route Extractor][Error] No route found for #{path}"
+                recognized_path = {controller: path}
               end
             end
           end
