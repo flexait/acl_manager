@@ -17,7 +17,12 @@ module AclManager
     scope :outter_nodes, ->(acl){ where('lft >= ?', acl.lft).where('rgt <= ?', acl.rgt) }
 
     def self.permit!(acl)
-      inner_node(acl).limit(1).any?
+      if(acl.nil?)
+        Rails.logger.warn '[AclManager] Acl is nil for permission'
+        true
+      else
+        inner_node(acl).limit(1).any?
+      end
     end
 
     def included? role
