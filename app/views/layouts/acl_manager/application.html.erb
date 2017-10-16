@@ -32,10 +32,10 @@
         <nav class="nav">
           <ul class="nav-list">
             <li class="nav-item">
-              <%= link_to "Roles", acl_manager.roles_path, class: 'pure-button' %>
+              <%= link_to AclManager::Role.model_name.human(count: :other), acl_manager.roles_path, class: 'pure-button' %>
             </li>
             <li class="nav-item">
-              <%= link_to "Acls", acl_manager.acls_path, class: 'pure-button' %>
+              <%= link_to AclManager::Acl.model_name.human(count: :other), acl_manager.acls_path, class: 'pure-button' %>
             </li>
           </ul>
         </nav>

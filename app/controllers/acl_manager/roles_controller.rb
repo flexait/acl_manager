@@ -27,7 +27,7 @@ module AclManager
       @role = Role.new(role_params)
 
       if @role.save
-        redirect_to @role, notice: 'Role was successfully created.'
+        redirect_to @role, notice: t('notices.create', model: Role.model_name.human)
       else
         render :new
       end
@@ -36,7 +36,7 @@ module AclManager
     # PATCH/PUT /roles/1
     def update
       if @role.update(role_params)
-        redirect_to @role, notice: 'Role was successfully updated.'
+        redirect_to @role, notice: t('notices.update', model: Role.model_name.human)
       else
         render :edit
       end
@@ -45,7 +45,7 @@ module AclManager
     # DELETE /roles/1
     def destroy
       @Role.destroy
-      redirect_to roles_url, notice: 'Role was successfully destroyed.'
+      redirect_to roles_url, notice: t('notices.destroy', model: Role.model_name.human)
     end
 
     private
