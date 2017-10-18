@@ -1,5 +1,5 @@
-<h1>New Role</h1>
+<h1><%= t('commands.new_model', model: @role.model_name.human) %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', roles_path %>
+<%= link_to t('commands.back'), roles_path %>

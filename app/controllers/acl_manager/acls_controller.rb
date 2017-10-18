@@ -27,7 +27,7 @@ module AclManager
       @acl = Acl.new(acl_params)
 
       if @acl.save
-        redirect_to @acl, notice: 'Acl was successfully created.'
+        redirect_to @acl, notice: t('notices.create', model: Acl.model_name.human)
       else
         render :new
       end
@@ -36,7 +36,7 @@ module AclManager
     # PATCH/PUT /acls/1
     def update
       if @acl.update(acl_params)
-        redirect_to @acl, notice: 'Acl was successfully updated.'
+        redirect_to @acl, notice: t('notices.update', model: Acl.model_name.human)
       else
         render :edit
       end
@@ -45,12 +45,12 @@ module AclManager
     # DELETE /acls/1
     def destroy
       @acl.destroy
-      redirect_to acls_url, notice: 'Acl was successfully destroyed.'
+      redirect_to acls_url, notice: t('notices.destroy', model: Acl.model_name.human)
     end
 
     def build_all
       AclManager::Acl.build_all!
-      redirect_to :back, notice: t('notices.acl.build')
+      redirect_to :back, notice: t('notices.acl.build_all')
     end
 
     private

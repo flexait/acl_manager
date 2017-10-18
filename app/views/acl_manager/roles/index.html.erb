@@ -1,6 +1,6 @@
 
 <div class="posts">
-<h1 class="content-subhead">Roles</h1>
+<h1 class="content-subhead"><%= AclManager::Role.model_name.human(count: :other) %></h1>
 
 <% @roles.each do |role| %>
   <section class="post">
@@ -9,7 +9,7 @@
 
       <h2 class="post-title"><%= role.name %></h2>
       <p class="post-meta">
-        <%= link_to 'Edit role', acl_manager.edit_role_path(role) %> :: active? <a class="post-category <%= role.active %>" href="#"><%= role.active? %></a>
+        <%= link_to t('commands.edit_model', model: role.model_name.human), acl_manager.edit_role_path(role) %> :: <%= t('.active') %> <a class="post-category <%= role.active %>" href="#"><%= role.active? %></a>
       </p>
     </header>
 
@@ -19,5 +19,4 @@
   </section>
 <% end %>
 </div>
-
-<%= link_to 'Add new role', acl_manager.new_role_path, class: 'pure-button' %>
+<%= link_to t('commands.new_model', model: AclManager::Role.model_name.human), acl_manager.new_role_path, class: 'pure-button' %>

@@ -1,0 +1,34 @@
+en:
+  activerecord:
+    attributes:
+      acl_manager:
+        role: Role
+    models:
+      acl_manager/role: 
+        one: Role
+        other: Roles
+      acl_manager/acl: 
+        one: ACL
+        other: ACLs
+      acl: ACL
+  acl_manager:
+    acls:
+      index:
+        build_all: Build all
+    roles:
+      index:
+        active: Active?
+  notices:
+    destroy: '%{model} was destroyed successfully.'
+    update: '%{model} was updated successfully.'
+    create: '%{model} was created successfully.'
+    acl:
+      build_all: ACL built succesfully.
+  commands:
+    save: 'Save %{model}'
+    back: Back
+    edit: Edit
+    show: Show
+    edit_model: 'Edit %{model}'
+    new_model: 'New %{model}'
+    cancel: C

@@ -52,6 +52,6 @@
     <%= f.number_field :rgt %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('commands.save', model: @acl.model_name.human) %>
   </div>
 <% end %>

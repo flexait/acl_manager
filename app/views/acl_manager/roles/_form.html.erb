@@ -26,7 +26,7 @@
       <% end %>
     </div>
 
-    <%= f.submit nil, class: 'pure-button pure-button-primary' %>
-    <%= link_to 'Cancel', roles_path, class: 'button-error pure-button' %>
+    <%= f.submit t('commands.save', model: @role.model_name.human), class: 'pure-button pure-button-primary' %>
+    <%= link_to t('commands.cancel'), roles_path, class: 'button-error pure-button' %>
   </fieldset>
 <% end %>
