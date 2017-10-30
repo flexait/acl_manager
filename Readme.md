@@ -43,5 +43,13 @@
 activerecord.attributes.acl_manager.role.#{role_name}
 ```
 
+### Contribute
+
+As a rails engine, there is a dummy test application. `test/dummy`.
+At this path you can rise a rails aplication and test your modifications in a easy way, instead of creating a new one from zero.
+Inside of this dummy aplication there is a User model to play with.
+
+
+
 ## License
 This project rocks and uses MIT-LICENSE.
