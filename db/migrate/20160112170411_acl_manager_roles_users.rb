@@ -1,4 +1,4 @@
-class AclManagerRolesUsers < ActiveRecord::Migration
+class AclManagerRolesUsers < ActiveRecord::Migration[4.2]
   def change
     create_join_table :acl_manager_roles, :users do |t|
       t.index [:acl_manager_role_id, :user_id]

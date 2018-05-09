@@ -1,4 +1,4 @@
-class CreateAclManagerAcls < ActiveRecord::Migration
+class CreateAclManagerAcls < ActiveRecord::Migration[4.2]
   def change
     create_table :acl_manager_acls do |t|
       t.string :name
