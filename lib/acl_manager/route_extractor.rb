@@ -28,6 +28,7 @@ module AclManager
       def section(list)
         list.each do |route|
           reqs = extract(route[:reqs])
+          next if reqs.nil?
           @namespaces << reqs[:namespace]
           @controllers << {namespace: reqs[:namespace], controller: reqs[:controller]}
           @routes << normalize(route, reqs)
@@ -46,6 +47,7 @@ module AclManager
 
       def extract(reqs)
         return {namespace: reqs} if reqs.include?("::")
+        return if reqs == 'redirect(301)'
         regex = /(?:(?<namespace>.*)\/)?(?<controller>.+)\#(?<action>[^\s]*)(.+)?/.match(reqs)
         {namespace: regex[:namespace] || 'none', controller: regex[:controller], action: regex[:action]}
       end
