@@ -50,7 +50,8 @@ module AclManager
 
     def build_all
       AclManager::Acl.build_all!
-      redirect_to :back, notice: t('notices.acl.build_all')
+      flash[:notice] = t('notices.acl.build_all')
+      redirect_to acls_path
     end
 
     private

@@ -1,5 +1,6 @@
-class AddAclManagerToUsers < ActiveRecord::Migration
+class AddAclManagerToUsers < ActiveRecord::Migration[4.2]
   def change
+    return
     create_table :acl_manager_roles do |t|
       t.string :name
       t.boolean :active

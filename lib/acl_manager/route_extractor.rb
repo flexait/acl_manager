@@ -81,7 +81,7 @@ module AclManager
               if(engine_path.match(/#{engine_name}(\/.*)/))
                 recognized_path = engine.routes.recognize_path($1, options)
               end
-            rescue ActionController::RoutingError => e
+            rescue ActionController::RoutingError
               Rails.logger.debug "[Route Extractor][Error] No route found for #{path}"
             end
           end
