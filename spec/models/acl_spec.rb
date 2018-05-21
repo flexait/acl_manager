@@ -20,6 +20,25 @@ describe AclManager::Acl do
     it { expect(subject.class).to respond_to(:root) }
   end
 
-  describe '.root_and_descendents' do
+  describe '#included?' do
+    context 'when given role is on current acl roles list' do
+      before do
+        allow(subject).to receive(:role_ids).and_return([1, 2, 3])
+      end
+
+      it 'returns true' do
+        expect(subject.included?(role)).to be_truthy
+      end
+    end
+
+    context 'when given role is not on current acl roles list' do
+      before do
+        allow(subject).to receive(:role_ids).and_return([2, 3, 4])
+      end
+
+      it 'returns true' do
+        expect(subject.included?(role)).to be_falsey
+      end
+    end
   end
 end
