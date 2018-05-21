@@ -30,9 +30,6 @@ module AclManager
             end
           end
 
-
-
-
           helper AclManager::AclsHelper if respond_to? :helper
         end
       end
