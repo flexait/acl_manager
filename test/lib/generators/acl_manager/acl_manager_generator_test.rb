@@ -3,7 +3,7 @@ require 'generators/acl_manager/acl_manager_generator'
 
 module AclManager
   class AclManagerGeneratorTest < Rails::Generators::TestCase
-    tests AclManagerGenerator
+    tests Generators::AclManagerGenerator
     destination Rails.root.join('tmp/generators')
     setup :prepare_destination
 
