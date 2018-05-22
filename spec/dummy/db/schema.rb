@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2016_07_26_144808) do
+ActiveRecord::Schema.define(version: 20180522010256) do
 
   create_table "acl_manager_acls", force: :cascade do |t|
     t.string "name"
@@ -27,11 +27,11 @@ ActiveRecord::Schema.define(version: 2016_07_26_144808) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "acl_manager_acls_roles", force: :cascade do |t|
-    t.integer "acl_manager_acl_id"
-    t.integer "acl_manager_role_id"
-    t.index ["acl_manager_acl_id"], name: "index_acl_manager_acls_roles_on_acl_manager_acl_id"
-    t.index ["acl_manager_role_id"], name: "index_acl_manager_acls_roles_on_acl_manager_role_id"
+  create_table "acl_manager_acls_roles", id: false, force: :cascade do |t|
+    t.integer "acl_manager_acl_id", null: false
+    t.integer "acl_manager_role_id", null: false
+    t.index ["acl_manager_acl_id", "acl_manager_role_id"], name: "acl_manager_acl_role"
+    t.index ["acl_manager_role_id", "acl_manager_acl_id"], name: "acl_manager_role_acl"
   end
 
   create_table "acl_manager_roles", force: :cascade do |t|
@@ -42,11 +42,11 @@ ActiveRecord::Schema.define(version: 2016_07_26_144808) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "acl_manager_roles_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "acl_manager_role_id"
-    t.index ["acl_manager_role_id"], name: "index_acl_manager_roles_users_on_acl_manager_role_id"
-    t.index ["user_id"], name: "index_acl_manager_roles_users_on_user_id"
+  create_table "acl_manager_roles_users", id: false, force: :cascade do |t|
+    t.integer "acl_manager_role_id", null: false
+    t.integer "user_id", null: false
+    t.index ["acl_manager_role_id", "user_id"], name: "acl_manager_join_role_user"
+    t.index ["user_id", "acl_manager_role_id"], name: "acl_manager_join_user_acl"
   end
 
   create_table "users", force: :cascade do |t|
