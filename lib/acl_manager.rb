@@ -2,6 +2,8 @@ require 'rails'
 require "acl_manager/engine"
 require "acl_manager/builder"
 require "acl_manager/filter"
+require "acl_manager/routing/array_formatter"
+require "acl_manager/routing/recognizer"
 require "acl_manager/route_extractor"
 require "acl_manager/permissions"
 require "acl_manager/relationships"
