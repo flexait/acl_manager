@@ -26,7 +26,7 @@ module AclManager
     end
 
     def included? role
-      self.acl_manager_role_ids.include?(role.id)
+      role_ids.include?(role.id)
     end
 
     class << self

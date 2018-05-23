@@ -7,10 +7,14 @@ module AclManager
       create_namespaces
       create_controllers
       create_acls
-      Acl.where.not(id: @acls.map(&:id)).destroy_all
-    end       
+      destory_old_acls
+    end
 
     private
+
+    def destory_old_acls
+      Acl.where.not(id: @acls.map(&:id)).destroy_all
+    end
 
     def create_namespaces
       @all[:namespaces].each do |namespace|
@@ -21,7 +25,7 @@ module AclManager
     def create_controllers
       @all[:controllers].each do |route|
         parent = Acl.find_by(name: route[:namespace], namespace: route[:namespace]) || Acl.root
-        @acls << Acl.find_or_create_by(name: controller_name(route), namespace: route[:namespace], 
+        @acls << Acl.find_or_create_by(name: controller_name(route), namespace: route[:namespace],
           controller: route[:controller], parent: parent)
       end
     end
@@ -34,7 +38,7 @@ module AclManager
 
     def build! route
       db_route = Acl.find_by(namespace: route[:namespace], controller: route[:controller], action: route[:action])
-      route[:parent] = Acl.find_by(name: controller_name(route), namespace: route[:namespace], controller: route[:controller]) || 
+      route[:parent] = Acl.find_by(name: controller_name(route), namespace: route[:namespace], controller: route[:controller]) ||
         Acl.root
       if db_route.nil?
         @acls << Acl.create(route)
