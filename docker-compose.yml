@@ -1,0 +1,18 @@
+version: '3.4'
+services: 
+  app:
+    container_name: acl_manager
+    image: app
+    user: $USER
+    volumes:
+      - bundle:/usr/local/bundle
+      - ${PWD}:/var/www/app
+    working_dir: /var/www/app/spec/dummy
+    tty: true
+    ports:
+      - 3000:3000
+    command: rails server -b 0.0.0.0
+
+volumes:
+  bundle:
+    name: bundle
