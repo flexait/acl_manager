@@ -43,7 +43,7 @@ module AclManager
 	  def find_route
 	    method = (@last_param.is_a?(Hash) && !@last_param[:method].nil?) ? @last_param : {}
 	    url_path = "#{request.protocol}#{request.host}:#{request.port}#{url_for(@options)}"
-	    AclManager::RouteExtractor::Recognizer.fullpath(url_path, method)
+	    AclManager::Routing::Recognizer.fullpath(url_path, method)
 	  end
   end
 end
