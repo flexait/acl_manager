@@ -24,6 +24,7 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe UsersController, type: :controller do
+  login_user
 
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
@@ -37,7 +38,8 @@ RSpec.describe UsersController, type: :controller do
 
   let(:invalid_attributes) {
     {
-      email: 'john'
+      email: 'john',
+      password: '1'
     }
   }
 
@@ -94,7 +96,7 @@ RSpec.describe UsersController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: {user: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        expect(response).to render_template(:new)
       end
     end
   end
@@ -103,18 +105,17 @@ RSpec.describe UsersController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          email: 'anne@email.com',
-          password: '123456789'
+          password: '987654321'
         }
       }
 
       it "updates the requested user" do
         user = User.create! valid_attributes
-        expect(user.email).to eq('john@email.com')
+        updated_at = user.updated_at
 
         put :update, params: {id: user.to_param, user: new_attributes}, session: valid_session
         user.reload
-        expect(user.email).to eq('anne@email.com')
+        expect(user.updated_at).to_not eq(updated_at)
       end
 
       it "redirects to the user" do
@@ -128,7 +129,7 @@ RSpec.describe UsersController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         user = User.create! valid_attributes
         put :update, params: {id: user.to_param, user: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        expect(response).to render_template(:edit)
       end
     end
   end

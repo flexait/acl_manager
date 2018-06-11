@@ -15,4 +15,4 @@ gemspec
 # To use a debugger
 
 gem 'pry-rails', group: [:development, :test]
-
+gem 'rails-controller-testing', group: [:test]
