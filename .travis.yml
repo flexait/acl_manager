@@ -6,6 +6,6 @@ rvm:
 bundler_args: --jobs=10
 
 script:
-  - bundle exec rails db:migrate
+  - bundle exec rails db:schema:load
   - bundle exec rspec
 
