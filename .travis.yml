@@ -1,0 +1,11 @@
+language: ruby
+
+rvm:
+  - 2.4.3
+
+bundler_args: --jobs=10
+
+script:
+  - bundle exec rails db:schema:load
+  - bundle exec rspec
+
